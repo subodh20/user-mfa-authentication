@@ -9,6 +9,7 @@
   "author": "subodh",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "pg-promise": "^11.13.0"
   }
 }
