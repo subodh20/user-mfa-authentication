@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    console.log("handleSignUp");
+  };
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="w-130 h-150 border-2 bg-sky-50 flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col items-start gap-1">
+        <label htmlFor="email">Email:</label>
+        <input
+          name="email"
+          type="email"
+          className="border-2 border-sky-500 w-100 h-10 p-2 rounded-sm outline-0"
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="flex flex-col items-start gap-1">
+        <label htmlFor="password">Password:</label>
+        <input
+          name="password"
+          type="password"
+          className="border-2 border-sky-500 w-100 h-10 p-2 rounded-sm outline-0"
+        />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <div className="flex flex-col items-start gap-1">
+        <label htmlFor="mobile">Mobile:</label>
+        <input
+          name="mobile"
+          type="phone"
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          className="border-2 border-sky-500 w-100 h-10 p-2 rounded-sm outline-0"
+        />
+      </div>
+      <button
+        className="bg-sky-500 text-2xl text-white w-50 h-10 rounded-sm hover:bg-sky-600"
+        onClick={handleSignUp}
+      >
+        Sign Up
+      </button>
+    </div>
+  );
 }
 
-export default App
+export default App;
