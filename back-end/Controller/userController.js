@@ -32,4 +32,25 @@ module.exports = {
       message: result.message,
     });
   },
+  loginUser: async (req, res) => {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res
+        .status(400)
+        .json({ message: "Username or password is missing" });
+    }
+    const userData = { username };
+    const user = await userServices.loginUser(userData);
+    console.log(user);
+    if (user.error) {
+      return res.status(500).json({ message: user.error });
+    }
+    if (passwordhash.comparePassword(password, user.password)) {
+      return res.status(200).json({
+        message: "Login successful",
+        data: { username: user.username, mobile: user.mobile },
+      });
+    }
+    return res.status(401).json({ message: "Invalid credentials" });
+  },
 };

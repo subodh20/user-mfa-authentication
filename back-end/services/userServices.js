@@ -11,6 +11,20 @@ module.exports = {
       return { error: "Error registering user:" + error.message };
     }
   },
+  loginUser: async (userData) => {
+    const { username } = userData;
+    const query = `SELECT * FROM users WHERE username = $1`;
+    const value = [username];
+    try {
+      const user = await db.oneOrNone(query, value);
+      if (!user) {
+        return { error: "User not found" };
+      }
+      return user;
+    } catch (error) {
+      return { error: `Error logging in user:${error.message}` };
+    }
+  },
   getAllUsers: async () => {
     const query = `SELECT * FROM users`;
     try {
