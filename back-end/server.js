@@ -11,6 +11,7 @@ app.get("/health", async (req, res) => {
     res.status(500).send("DB connection error:" + e.message);
   }
 });
+
 app.use(express.json());
 app.use("/api", userRoute);
 app.listen(port, () => {

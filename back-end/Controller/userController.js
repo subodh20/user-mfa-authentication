@@ -1,4 +1,5 @@
 const userServices = require("../services/userServices");
+const passwordhash = require("../utils/passwordhash");
 module.exports = {
   getUser: async (req, res) => {
     const users = await userServices.getAllUsers();
@@ -11,17 +12,19 @@ module.exports = {
       data: userWithoutPass,
     });
   },
-  registerUser: (req, res) => {
-    const { username, password, mobile } = req.body;
+  registerUser: async (req, res) => {
+    let { username, password, mobile } = req.body;
     if (!username || !password || !mobile) {
       return res.status(400).json({ message: "Some fields are missing" });
     }
+    password = await passwordhash.generateHashedPassword(password);
     const userData = {
       username,
       password,
       mobile,
     };
-    const result = userServices.registerUser(userData);
+    const result = await userServices.registerUser(userData);
+    console.log(result);
     if (result.error) {
       return res.status(500).json({ message: result.error });
     }
