@@ -1,5 +1,9 @@
 const userServices = require("../services/userServices");
 const passwordhash = require("../utils/passwordhash");
+const {
+  signedAuthToken,
+  signedRefreshToken,
+} = require("../utils/auth-middleware");
 module.exports = {
   getUser: async (req, res) => {
     const users = await userServices.getAllUsers();
@@ -41,14 +45,24 @@ module.exports = {
     }
     const userData = { username };
     const user = await userServices.loginUser(userData);
-    console.log(user);
     if (user.error) {
       return res.status(500).json({ message: user.error });
     }
     if (passwordhash.comparePassword(password, user.password)) {
+      const accessToken = signedAuthToken({ user: user.username });
+      const refreshToken = signedRefreshToken({ user: user.username });
+      if (!accessToken || !refreshToken) {
+        return res.status(500).json({ message: "Error generating tokens" });
+      }
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        samesite: "Strict",
+      });
       return res.status(200).json({
         message: "Login successful",
         data: { username: user.username, mobile: user.mobile },
+        Metadata: { accessToken },
       });
     }
     return res.status(401).json({ message: "Invalid credentials" });
