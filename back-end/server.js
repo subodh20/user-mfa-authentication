@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./dbs/db");
 const userRoute = require("./routes/userRoute");
+const authRoute = require("./routes/authRoute");
 const port = 3000;
 app.get("/health", async (req, res) => {
   try {
@@ -14,6 +15,7 @@ app.get("/health", async (req, res) => {
 
 app.use(express.json());
 app.use("/api", userRoute);
+app.user("/api/auth", authRoute);
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });

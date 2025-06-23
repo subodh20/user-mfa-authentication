@@ -2,7 +2,7 @@ const SECRET_KEY = process.env.SECRET_KEY || "1234";
 const REFRESH_KEY = process.env.REFRESH_TOKEN_SECRET_KEY || "1234";
 const jwt = require("jsonwebtoken");
 const signedAuthToken = (user) => {
-  return jwt.sign({ user }, SECRET_KEY, { expiresIn: "1d" });
+  return jwt.sign({ user }, SECRET_KEY, { expiresIn: "1m" });
 };
 const verifyAuthToken = (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1];
