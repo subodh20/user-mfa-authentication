@@ -15,7 +15,7 @@ app.get("/health", async (req, res) => {
 
 app.use(express.json());
 app.use("/api", userRoute);
-app.user("/api/auth", authRoute);
+app.use("/api/auth", authRoute);
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
