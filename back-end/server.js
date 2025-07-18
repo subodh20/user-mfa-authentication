@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
 const db = require("./dbs/db");
 const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
@@ -12,7 +13,7 @@ app.get("/health", async (req, res) => {
     res.status(500).send("DB connection error:" + e.message);
   }
 });
-
+app.use(cookieParser());
 app.use(express.json());
 app.use("/api", userRoute);
 app.use("/api/auth", authRoute);

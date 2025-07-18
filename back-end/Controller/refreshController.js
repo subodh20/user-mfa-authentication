@@ -6,7 +6,8 @@ const {
 } = require("../utils/auth-middleware");
 module.exports = {
   refreshController: async (req, res) => {
-    const oldRefToken = req.cookies.refreshToken;
+    console.log(req.cookies.isExpired);
+    const oldRefToken = req.cookies?.refreshToken;
     const { username } = req.body;
     if (!oldRefToken) {
       return res.status(401).json({ message: "No Refresh token provided" });
@@ -41,6 +42,8 @@ module.exports = {
     if (result.error) {
       return res.status(500).json({ message: result.error });
     }
-    return res.status(200).json({ message: "Refresh token is created" });
+    return res
+      .status(200)
+      .json({ message: "Access token is refreshed", AccessToken: accessToken });
   },
 };
